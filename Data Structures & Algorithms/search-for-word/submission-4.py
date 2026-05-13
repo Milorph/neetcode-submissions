@@ -1,0 +1,31 @@
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        
+
+        
+        def backtrack(index, row, col):
+            
+            
+            if index == len(word):
+                return True
+            
+            if row < 0 or row > len(board) - 1 or col < 0 or col > len(board[0]) - 1 or board[row][col] != word[index]:
+                return False
+
+            temp = board[row][col]
+            board[row][col] = '#'
+            
+            found = backtrack(index + 1, row + 1, col) or backtrack(index + 1, row, col + 1) or backtrack(index + 1, row - 1, col) or backtrack(index + 1, row, col - 1)
+            
+            board[row][col] = temp
+
+            return found
+
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if board[i][j] == word[0]:
+                    if backtrack(0, i, j):
+                        return True
+
+        return False
+        
